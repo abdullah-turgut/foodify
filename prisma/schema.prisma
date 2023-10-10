@@ -10,37 +10,92 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Profile {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique @db.ObjectId
-  first_name String
-  last_name String
-  email String
-  phone String
-  order_count Int @default(0)
-  role Roles
+model User {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  authId      String @unique @db.ObjectId
+  first_name  String
+  last_name   String
+  email       String
+  phone       String
+  order_count Int    @default(0)
 
   adress Adress[]
+  cart   Cart[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum Roles {
-  EATER
-  COOKER
 }
 
 model Adress {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  city String
-  town String
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  city        String
+  town        String
   full_adress String
 
-  profileId String @db.ObjectId
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Restaurant {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  authId      String  @unique @db.ObjectId
+  name        String
+  city        String
+  town        String
+  full_adress String
+  open        String
+  close       String
+  imageUrl    String
+  active      Boolean @default(false)
+
+  menu Menu[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  ingredients String
+  category    Category
+  available   Boolean  @default(true)
+  price       Float
+
+  restaurantId String     @db.ObjectId
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Category {
+  STARTER
+  FASTFOOD
+  MENU
+  STEAK
+  CHICKEN
+  SEAFOOD
+  PASTA
+  SOUP
+  PIZZA
+  BURGER
+  SANDWICH
+  DESSERT
+  DRINKS
+  OTHER
 }
