@@ -18,7 +18,7 @@ model Profile {
   email String
   phone String
   order_count Int @default(0)
-  role String
+  role Roles
 
   adress Adress[]
 
@@ -26,7 +26,10 @@ model Profile {
   updatedAt DateTime @updatedAt
 }
 
-
+enum Roles {
+  EATER
+  COOKER
+}
 
 model Adress {
   id String @id @default(auto()) @map("_id") @db.ObjectId
