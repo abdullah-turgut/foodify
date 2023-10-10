@@ -13,19 +13,31 @@ datasource db {
 model Profile {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @unique @db.ObjectId
-  firstName String
-  lastName String
+  first_name String
+  last_name String
   email String
   phone String
+  order_count Int @default(0)
+  role String
 
   adress Adress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
+
 
 model Adress {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
   title String
-  description String
+  city String
+  town String
+  full_adress String
 
-  profile Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String @db.ObjectId
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
