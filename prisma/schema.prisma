@@ -9,3 +9,23 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Profile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  firstName String
+  lastName String
+  email String
+  phone String
+
+  adress Adress[]
+}
+
+model Adress {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  title String
+  description String
+
+  profile Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
