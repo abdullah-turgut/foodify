@@ -1,9 +1,11 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
-import { ThemeProvider } from '@/components/providers/theme-provider';
-import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
+
+import { ThemeProvider } from '@/components/providers/theme-provider';
+import ToastProvider from '@/components/providers/toast-provider';
+import { cn } from '@/lib/utils';
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -26,6 +28,7 @@ export default function RootLayout({
             defaultTheme="light"
             enableSystem={false}
           >
+            <ToastProvider />
             {children}
           </ThemeProvider>
         </body>
