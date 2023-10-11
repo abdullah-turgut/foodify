@@ -19,6 +19,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   first_name: z.string().min(1, {
@@ -64,6 +65,7 @@ const EaterCreatePage = () => {
       title: '',
       city: '',
       district: '',
+      full_address: '',
       email: auth.user?.emailAddresses[0].emailAddress,
       authId: auth.user?.id,
     },
@@ -71,13 +73,20 @@ const EaterCreatePage = () => {
 
   const { isSubmitting, isValid } = form.formState;
 
+  console.log(step);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await axios.post('/api/eater/create', values);
-      toast.success('Profile created successfully!');
-      router.push('/eater/address');
-    } catch (error) {
-      toast.error('Something went wrong!');
+    if (step === 0) {
+      setData(values);
+      setStep(1);
+    } else {
+      try {
+        const response = await axios.post('/api/eater/create', values);
+        toast.success('Profile created successfully!');
+        router.push('/eater/address');
+      } catch (error) {
+        toast.error('Something went wrong!');
+      }
     }
   };
   return (
@@ -144,7 +153,7 @@ const EaterCreatePage = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First name</FormLabel>
+                  <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={isSubmitting} />
                   </FormControl>
@@ -157,7 +166,7 @@ const EaterCreatePage = () => {
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>City</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={isSubmitting} />
                   </FormControl>
@@ -170,7 +179,7 @@ const EaterCreatePage = () => {
               name="district"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>District</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={isSubmitting} />
                   </FormControl>
@@ -183,9 +192,9 @@ const EaterCreatePage = () => {
               name="full_address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>Full Address</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isSubmitting} />
+                    <Textarea {...field} disabled={isSubmitting} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -193,14 +202,20 @@ const EaterCreatePage = () => {
             />
           </>
         )}
-        <Button
-          type="submit"
-          variant="default"
-          disabled={!isValid || isSubmitting}
-          className="w-full"
-        >
-          Create
-        </Button>
+        {step == 0 ? (
+          <Button type="button" onClick={() => setStep(1)} className="w-full">
+            Next
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            variant="default"
+            disabled={!isValid || isSubmitting}
+            className="w-full"
+          >
+            Create
+          </Button>
+        )}
       </form>
     </Form>
   );
