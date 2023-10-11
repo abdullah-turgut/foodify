@@ -38,7 +38,7 @@ const SetupPage = async () => {
         >
           <Utensils size={50} className="group-hover:animate-bounce" />
           <p className="font-bold">I am eater</p>
-          <div className="absolute bottom-0 right-0 bg-stone-100 px-4 translate-y-1/2 -translate-x-[15%] rounded-2xl">
+          <div className="absolute bottom-0 right-0 bg-emerald-500 px-4 translate-y-1/2 -translate-x-[15%] rounded-2xl border-2 border-stone-900">
             <div className="text-stone-900 font-bold text-sm">Free</div>
           </div>
         </Link>
@@ -49,7 +49,7 @@ const SetupPage = async () => {
         >
           <ChefHat size={50} className="group-hover:animate-bounce" />
           <p className="font-bold">I am cooker</p>
-          <div className="absolute bottom-0 right-0 bg-stone-100 px-4 translate-y-1/2 -translate-x-[15%] rounded-2xl">
+          <div className="absolute bottom-0 right-0 bg-rose-500 px-4 translate-y-1/2 -translate-x-[15%] rounded-2xl border-2 border-stone-900">
             <div className="text-stone-900 font-bold text-sm">299$ mo</div>
           </div>
         </Link>
