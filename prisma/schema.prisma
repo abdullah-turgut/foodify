@@ -19,22 +19,25 @@ model User {
   phone       String
   order_count Int    @default(0)
 
-  adress Adress[]
+  address Address[]
   cart   Cart[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Adress {
+model Address {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   city        String
-  town        String
-  full_adress String
+  district        String
+  full_address String
 
   userId String? @db.ObjectId
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -60,12 +63,13 @@ model Restaurant {
   name        String
   city        String
   town        String
-  full_adress String
+  full_address String
   open        String
   close       String
   imageUrl    String
   active      Boolean @default(false)
 
+  address Address[]
   menu   Menu[]
   orders Cart[]
 

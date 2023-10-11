@@ -1,13 +1,13 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Open_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import ToastProvider from '@/components/providers/toast-provider';
 import { cn } from '@/lib/utils';
 
-const font = Open_Sans({ subsets: ['latin'] });
+const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Foodify',
