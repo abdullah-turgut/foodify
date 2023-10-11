@@ -1,6 +1,6 @@
 const SetupLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-full flex items-center justify-center px-5">
+    <div className="min-h-full flex items-center justify-center px-5 py-10">
       {children}
     </div>
   );

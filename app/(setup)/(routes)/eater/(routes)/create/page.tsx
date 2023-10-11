@@ -36,18 +36,18 @@ const formSchema = z.object({
       message: 'Must be a valid mobile number',
     })
     .max(14, { message: 'Must be a valid mobile number' }),
-  // title: z.string().min(1, {
-  //   message: 'Title is required!',
-  // }),
-  // city: z.string().min(1, {
-  //   message: 'City is required!',
-  // }),
-  // district: z.string().min(1, {
-  //   message: 'District is required!',
-  // }),
-  // full_address: z.string().min(1, {
-  //   message: 'Full address is required!',
-  // }),
+  title: z.string().min(1, {
+    message: 'Title is required!',
+  }),
+  city: z.string().min(1, {
+    message: 'City is required!',
+  }),
+  district: z.string().min(1, {
+    message: 'District is required!',
+  }),
+  full_address: z.string().min(1, {
+    message: 'Full address is required!',
+  }),
 });
 
 const EaterCreatePage = () => {
@@ -60,10 +60,10 @@ const EaterCreatePage = () => {
       first_name: '',
       last_name: '',
       phone: '',
-      // title: '',
-      // city: '',
-      // district: '',
-      // full_address: '',
+      title: '',
+      city: '',
+      district: '',
+      full_address: '',
       email: auth.user?.emailAddresses[0].emailAddress,
       authId: auth.user?.id,
     },
@@ -75,7 +75,7 @@ const EaterCreatePage = () => {
     try {
       const response = await axios.post('/api/eater/create', values);
       toast.success('Profile created successfully!');
-      router.push('/eater/settings');
+      router.push('/eater');
     } catch (error) {
       toast.error('Something went wrong!');
     }
@@ -128,6 +128,63 @@ const EaterCreatePage = () => {
                 <Input {...field} disabled={isSubmitting} />
               </FormControl>
               <FormDescription>Number must be 10-14 characters</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address Title</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  disabled={isSubmitting}
+                  placeholder="eg. Home, Work"
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input {...field} disabled={isSubmitting} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="district"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>District</FormLabel>
+              <FormControl>
+                <Input {...field} disabled={isSubmitting} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="full_address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Address</FormLabel>
+              <FormControl>
+                <Textarea {...field} disabled={isSubmitting} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
