@@ -75,7 +75,7 @@ const EaterCreatePage = () => {
     try {
       const response = await axios.post('/api/eater/create', values);
       toast.success('Profile created successfully!');
-      router.push('/eater/address');
+      router.push('/eater/settings');
     } catch (error) {
       toast.error('Something went wrong!');
     }
