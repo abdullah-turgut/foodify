@@ -43,11 +43,15 @@ model Adress {
 model Cart {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
+  items  Menu[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 model Restaurant {
@@ -62,7 +66,8 @@ model Restaurant {
   imageUrl    String
   active      Boolean @default(false)
 
-  menu Menu[]
+  menu   Menu[]
+  orders Cart[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,6 +83,9 @@ model Menu {
 
   restaurantId String     @db.ObjectId
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  cartId String? @db.ObjectId
+  Cart   Cart?   @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
